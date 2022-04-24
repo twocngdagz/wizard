@@ -8,7 +8,7 @@
 <div x-data @tags-update="console.log('tags updated', $event.detail.tags)" data-tags='[]'>
     <div x-data="tagSelect($wire.entangle('state.audience'))" x-init="init('parentEl')" @click.away="clearSearch()" @keydown.escape="clearSearch()">
         <div class="relative" @keydown.enter.prevent="addTag(textInput)">
-            <label class="block text-sm font-medium text-secondary-700 dark:text-gray-400 mb-1">{{ $attributes->get('label') }}</label>
+            <label class="{{ $hasError ? 'text-negative-600' : '' }} block text-sm font-medium text-secondary-700 dark:text-gray-400 mb-1">{{ $attributes->get('label') }}</label>
             <input
                 x-model="textInput"
                 x-ref="textInput"
@@ -16,6 +16,7 @@
                 class="{{ $hasError ? 'border-negative-300 text-negative-600' : '' }} shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 wire:model.defer="{{ $attributes->get('wire:model.defer') }}"
             >
+            <x-error :name="$name"></x-error>
             <div :class="[open ? 'block' : 'hidden']">
                 <div class="absolute z-40 left-0 mt-2 w-full">
                     <div class="py-1 text-sm bg-white rounded shadow-lg border border-gray-300">
